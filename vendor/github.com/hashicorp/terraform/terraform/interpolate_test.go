@@ -100,6 +100,35 @@ func TestInterpolater_moduleVariable(t *testing.T) {
 	})
 }
 
+func TestInterpolater_localVal(t *testing.T) {
+	lock := new(sync.RWMutex)
+	state := &State{
+		Modules: []*ModuleState{
+			&ModuleState{
+				Path: rootModulePath,
+				Locals: map[string]interface{}{
+					"foo": "hello!",
+				},
+			},
+		},
+	}
+
+	i := &Interpolater{
+		Module:    testModule(t, "interpolate-local"),
+		State:     state,
+		StateLock: lock,
+	}
+
+	scope := &InterpolationScope{
+		Path: rootModulePath,
+	}
+
+	testInterpolate(t, i, scope, "local.foo", ast.Variable{
+		Value: "hello!",
+		Type:  ast.TypeString,
+	})
+}
+
 func TestInterpolater_pathCwd(t *testing.T) {
 	i := &Interpolater{}
 	scope := &InterpolationScope{}
@@ -434,6 +463,34 @@ func TestInterpolater_resourceVariableMultiPartialUnknown(t *testing.T) {
 				Value: "2",
 			},
 		},
+	})
+}
+
+func TestInterpolater_resourceVariableMultiNoState(t *testing.T) {
+	// When evaluating a "splat" variable in a module that doesn't have
+	// any state yet, we should still be able to resolve to an empty
+	// list.
+	// See https://github.com/hashicorp/terraform/issues/14438 for an
+	// example of what we're testing for here.
+	lock := new(sync.RWMutex)
+	state := &State{
+		Modules: []*ModuleState{},
+	}
+
+	i := &Interpolater{
+		Module:    testModule(t, "interpolate-resource-variable-multi"),
+		State:     state,
+		StateLock: lock,
+		Operation: walkApply,
+	}
+
+	scope := &InterpolationScope{
+		Path: rootModulePath,
+	}
+
+	testInterpolate(t, i, scope, "aws_instance.web.*.foo", ast.Variable{
+		Type:  ast.TypeList,
+		Value: []ast.Variable{},
 	})
 }
 

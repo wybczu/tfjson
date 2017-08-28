@@ -12,9 +12,9 @@
 ## or in a dependency.
 # ignored = ["github.com/user/project/badpkg"]
 
-## Dependencies define constraints on dependent projects. They are respected by
+## constraint define constraints on dependent projects. They are respected by
 ## dep whether coming from the Gopkg.toml of the current project or a dependency.
-# [[dependencies]]
+# [[constraint]]
 ## Required: the root import path of the project being constrained.
 # name = "github.com/user/project"
 #
@@ -27,12 +27,12 @@
 ## Optional: an alternate location (URL or import path) for the project's source.
 # source = "https://github.com/myfork/package.git"
 
-## Overrides have the same structure as [[dependencies]], but supercede all
-## [[dependencies]] declarations from all projects. Only the current project's
-## [[overrides]] are applied.
+## override have the same structure as [[constraint]], but supercede all
+## [[constraint]] declarations from all projects. Only the current project's
+## [[override]] are applied.
 ##
-## Overrides are a sledgehammer. Use them only as a last resort.
-# [[overrides]]
+## override are a sledgehammer. Use them only as a last resort.
+# [[override]]
 ## Required: the root import path of the project being constrained.
 # name = "github.com/user/project"
 #
@@ -51,46 +51,46 @@
 
 
 
-[[dependencies]]
+[[constraint]]
   branch = "master"
   name = "github.com/apparentlymart/go-cidr"
 
-[[dependencies]]
+[[constraint]]
   branch = "master"
   name = "github.com/hashicorp/go-getter"
 
-[[dependencies]]
+[[constraint]]
   branch = "master"
   name = "github.com/hashicorp/go-multierror"
 
-[[dependencies]]
+[[constraint]]
   branch = "master"
   name = "github.com/hashicorp/go-uuid"
 
-[[dependencies]]
+[[constraint]]
   branch = "master"
   name = "github.com/hashicorp/go-version"
 
-[[dependencies]]
+[[constraint]]
   branch = "master"
   name = "github.com/hashicorp/hil"
 
-[[dependencies]]
+[[constraint]]
   branch = "master"
   name = "github.com/hashicorp/terraform"
 
-[[dependencies]]
+[[constraint]]
   branch = "master"
   name = "github.com/mitchellh/copystructure"
 
-[[dependencies]]
+[[constraint]]
   branch = "master"
   name = "github.com/mitchellh/go-homedir"
 
-[[dependencies]]
+[[constraint]]
   branch = "master"
   name = "github.com/mitchellh/hashstructure"
 
-[[dependencies]]
+[[constraint]]
   branch = "master"
   name = "github.com/mitchellh/reflectwalk"
